@@ -35,15 +35,15 @@ export default function Index() {
       <main className="relative container mx-auto px-4 py-16">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="gradient-text">Fullstack Development</span>
+            <span className="gradient-text">Audio Visualizer</span>
             <br />
-            <span className="text-foreground">Pre-Interview Assignment</span>
+            <span className="text-foreground">& Transcription Platform</span>
           </h1>
           <p className="text-lg text-muted-foreground mb-2">
-            Circular Audio Equalizer + Real-Time Transcription
+            Real-time circular frequency visualization with streaming transcription
           </p>
           <p className="text-sm text-muted-foreground">
-            By Pranav Pardeshi • December 2024
+            Pranav Pardeshi • December 2024
           </p>
         </div>
 
@@ -101,9 +101,9 @@ export default function Index() {
           </div>
         </div>
 
-        {/* Assignment Tasks Overview */}
+        {/* Features Overview */}
         <div className="max-w-3xl mx-auto mt-16">
-          <h3 className="text-lg font-semibold text-foreground text-center mb-6">Assignment Tasks Completed</h3>
+          <h3 className="text-lg font-semibold text-foreground text-center mb-6">Project Features</h3>
           <div className="space-y-3">
             <div className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border">
               <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center shrink-0">
@@ -120,7 +120,7 @@ export default function Index() {
               </div>
               <div>
                 <h4 className="text-sm font-medium text-foreground">Real-Time Streaming Transcription</h4>
-                <p className="text-xs text-muted-foreground">Spring Boot WebFlux architecture documented + frontend demo</p>
+                <p className="text-xs text-muted-foreground">Spring Boot WebFlux architecture with SSE streaming</p>
               </div>
             </div>
             <div className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border">
@@ -128,8 +128,8 @@ export default function Index() {
                 <span className="text-green-500 text-sm font-bold">3</span>
               </div>
               <div>
-                <h4 className="text-sm font-medium text-foreground">PrepXL.app Enhancement Suggestions</h4>
-                <p className="text-xs text-muted-foreground">Comprehensive UI/UX audit with specific improvement recommendations</p>
+                <h4 className="text-sm font-medium text-foreground">UI/UX Enhancement Proposals</h4>
+                <p className="text-xs text-muted-foreground">Comprehensive audit with specific improvement recommendations</p>
               </div>
             </div>
           </div>
@@ -145,7 +145,7 @@ export default function Index() {
               <p className="text-xs text-muted-foreground">imailpranav24k@gmail.com</p>
             </div>
             <p className="text-xs text-muted-foreground">
-              Fullstack Development Assignment • December 2024
+              Fullstack Development Project • December 2024
             </p>
           </div>
         </div>

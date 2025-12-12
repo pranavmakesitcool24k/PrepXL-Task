@@ -8,7 +8,7 @@ export default function Documentation() {
         <div className="container mx-auto px-4 py-4">
           <h1 className="text-xl font-semibold gradient-text">Project Documentation</h1>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Fullstack Development Assignment - Pranav Pardeshi
+            Fullstack Development Project - Pranav Pardeshi
           </p>
         </div>
       </header>
@@ -316,7 +316,7 @@ public class GeminiService {
         <section className="p-6 rounded-xl card-gradient border border-primary/30">
           <h2 className="text-lg font-semibold text-foreground mb-4">Project Summary</h2>
           <p className="text-sm text-muted-foreground mb-4">
-            This submission includes a fully functional circular audio equalizer with real-time frequency visualization,
+            This project includes a fully functional circular audio equalizer with real-time frequency visualization,
             a demonstration of the streaming transcription interface, comprehensive backend architecture documentation,
             and detailed UI/UX improvement suggestions for PrepXL.app.
           </p>
