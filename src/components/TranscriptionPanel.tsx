@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
-import { Mic, MicOff, Loader2, Volume2 } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import { Mic, MicOff, Loader2, Volume2, AlertCircle } from 'lucide-react';
+import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
 
 interface TranscriptionPanelProps {
   isRecording: boolean;
@@ -7,64 +8,35 @@ interface TranscriptionPanelProps {
 }
 
 export function TranscriptionPanel({ isRecording, volume }: TranscriptionPanelProps) {
-  const [transcription, setTranscription] = useState<string[]>([]);
-  const [isConnected, setIsConnected] = useState(false);
-  const [currentPartial, setCurrentPartial] = useState('');
+  const {
+    transcript,
+    interimTranscript,
+    isListening,
+    isSupported,
+    error,
+    startListening,
+    stopListening,
+    clearTranscript,
+  } = useSpeechRecognition();
+  
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Simulate streaming transcription for demo purposes
-  // In production, this would connect to the Spring Boot WebSocket server
+  // Start/stop speech recognition based on recording state
   useEffect(() => {
-    if (!isRecording) {
-      setIsConnected(false);
-      setCurrentPartial('');
-      return;
+    if (isRecording) {
+      clearTranscript();
+      startListening();
+    } else {
+      stopListening();
     }
-
-    setIsConnected(true);
-
-    // Simulated transcription for demonstration
-    const demoTexts = [
-      "Hello, this is a demonstration",
-      "of real-time audio transcription",
-      "The system captures your voice",
-      "and converts it to text instantly",
-      "This would connect to Gemini API",
-      "via the Spring Boot backend service",
-    ];
-
-    let textIndex = 0;
-    let charIndex = 0;
-
-    const interval = setInterval(() => {
-      if (!isRecording) return;
-
-      if (textIndex < demoTexts.length) {
-        const currentText = demoTexts[textIndex];
-        
-        if (charIndex < currentText.length) {
-          setCurrentPartial(currentText.substring(0, charIndex + 1));
-          charIndex++;
-        } else {
-          setTranscription(prev => [...prev, currentText]);
-          setCurrentPartial('');
-          textIndex++;
-          charIndex = 0;
-        }
-      } else {
-        textIndex = 0;
-      }
-    }, 80);
-
-    return () => clearInterval(interval);
-  }, [isRecording]);
+  }, [isRecording, startListening, stopListening, clearTranscript]);
 
   // Auto-scroll to bottom
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [transcription, currentPartial]);
+  }, [transcript, interimTranscript]);
 
   return (
     <div className="w-full max-w-md">
@@ -84,14 +56,32 @@ export function TranscriptionPanel({ isRecording, volume }: TranscriptionPanelPr
         <div className="flex items-center gap-2">
           <div
             className={`w-2 h-2 rounded-full ${
-              isConnected ? 'bg-green-500' : 'bg-muted-foreground'
+              isListening ? 'bg-green-500' : 'bg-muted-foreground'
             }`}
           />
           <span className="text-xs text-muted-foreground">
-            {isConnected ? 'Connected' : 'Disconnected'}
+            {isListening ? 'Listening' : 'Idle'}
           </span>
         </div>
       </div>
+
+      {/* Browser support warning */}
+      {!isSupported && (
+        <div className="mb-4 px-4 py-2 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center gap-2">
+          <AlertCircle className="w-4 h-4 text-amber-500" />
+          <span className="text-xs text-amber-500">
+            Speech recognition not supported. Try Chrome or Edge.
+          </span>
+        </div>
+      )}
+
+      {/* Error display */}
+      {error && (
+        <div className="mb-4 px-4 py-2 rounded-lg bg-destructive/10 border border-destructive/20 flex items-center gap-2">
+          <AlertCircle className="w-4 h-4 text-destructive" />
+          <span className="text-xs text-destructive">{error}</span>
+        </div>
+      )}
 
       {/* Volume indicator */}
       {isRecording && (
@@ -114,12 +104,13 @@ export function TranscriptionPanel({ isRecording, volume }: TranscriptionPanelPr
         ref={scrollRef}
         className="h-64 p-4 rounded-xl bg-card border border-border overflow-y-auto"
       >
-        {transcription.length === 0 && !currentPartial ? (
+        {transcript.length === 0 && !interimTranscript ? (
           <div className="h-full flex flex-col items-center justify-center text-muted-foreground">
             {isRecording ? (
               <>
                 <Loader2 className="w-6 h-6 animate-spin mb-2" />
                 <p className="text-sm">Listening for speech...</p>
+                <p className="text-xs mt-1 opacity-70">Speak clearly into your microphone</p>
               </>
             ) : (
               <>
@@ -130,7 +121,7 @@ export function TranscriptionPanel({ isRecording, volume }: TranscriptionPanelPr
           </div>
         ) : (
           <div className="space-y-2">
-            {transcription.map((text, index) => (
+            {transcript.map((text, index) => (
               <p
                 key={index}
                 className="text-sm text-foreground opacity-90 animate-fade-in"
@@ -139,9 +130,9 @@ export function TranscriptionPanel({ isRecording, volume }: TranscriptionPanelPr
                 {text}
               </p>
             ))}
-            {currentPartial && (
+            {interimTranscript && (
               <p className="text-sm text-primary">
-                {currentPartial}
+                {interimTranscript}
                 <span className="animate-pulse">|</span>
               </p>
             )}
@@ -151,8 +142,7 @@ export function TranscriptionPanel({ isRecording, volume }: TranscriptionPanelPr
 
       {/* Info note */}
       <p className="mt-3 text-xs text-muted-foreground text-center px-4">
-        Note: This demo simulates transcription. In production, audio chunks would stream 
-        to the Spring Boot backend and forward to Gemini API for real transcription.
+        Real-time speech recognition powered by Web Speech API
       </p>
     </div>
   );
