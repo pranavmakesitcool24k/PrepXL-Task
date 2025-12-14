@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Mic, MicOff, AlertCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Mic, MicOff, AlertCircle, ArrowLeft } from 'lucide-react';
 import { useAudioAnalyzer } from '@/hooks/useAudioAnalyzer';
 import { CircularEqualizer } from '@/components/CircularEqualizer';
 import { TranscriptionPanel } from '@/components/TranscriptionPanel';
@@ -48,11 +49,20 @@ export default function Equalizer() {
       <header className="border-b border-border/50 backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-xl font-semibold gradient-text">Audio Equalizer</h1>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Real-time frequency visualization
-              </p>
+            <div className="flex items-center gap-4">
+              <Link
+                to="/"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-secondary/50 hover:bg-secondary text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back
+              </Link>
+              <div>
+                <h1 className="text-xl font-semibold gradient-text">Audio Equalizer</h1>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Real-time frequency visualization
+                </p>
+              </div>
             </div>
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <div className={`w-2 h-2 rounded-full ${isActive ? 'bg-green-500 animate-pulse' : 'bg-muted-foreground'}`} />

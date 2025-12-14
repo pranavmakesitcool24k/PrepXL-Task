@@ -1,11 +1,19 @@
-import { FileText, Sparkles, User } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Sparkles, User, ArrowLeft } from 'lucide-react';
 
 export default function Documentation() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b border-border/50 backdrop-blur-sm sticky top-0 z-10 bg-background/80">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-4 flex items-center gap-4">
+          <Link
+            to="/"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-secondary/50 hover:bg-secondary text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back
+          </Link>
           <h1 className="text-xl font-semibold gradient-text">Project Documentation</h1>
         </div>
       </header>
