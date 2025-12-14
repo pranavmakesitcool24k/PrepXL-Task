@@ -1,19 +1,5 @@
 # Welcome to your project
 
-## Project Description
-
-This is a modern web application built with the latest frontend technologies.
-
-## Features
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
 ## Installation
 
 Follow these steps to get started locally:
